@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Usuario - Formulario</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a href="/usuarios" class="btn btn-light btn-sm">← Volver</a>
+        </div>
+    </nav>
+    
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h1 th:text="${usuario.id != null ? 'Editar Usuario' : 'Nuevo Usuario'}"></h1>
+                
+                <form th:action="${usuario.id != null ? '/usuarios/' + usuario.id : '/usuarios'}" th:object="${usuario}" method="POST" class="mt-4">
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" th:field="*{email}" required>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" class="form-control" th:field="*{nombre}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Apellido</label>
+                            <input type="text" class="form-control" th:field="*{apellido}" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" th:field="*{contrasena}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Rol</label>
+                        <select class="form-select" th:field="*{rol}">
+                            <option value="">-- Seleccionar --</option>
+                            <option th:each="r : ${roles}" th:value="${r.id}" th:text="${r.nombre}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <input type="checkbox" class="form-check-input" id="activo" th:field="*{activo}">
+                        <label class="form-check-label" for="activo">Activo</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
